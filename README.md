@@ -50,4 +50,4 @@ npm test                         # checks the API functions
 
 The page detects the API by itself. Opened anywhere else, such as in a preview, it falls back to saving in the visitor's browser and the admin password is `admin`.
 
-To rebuild `public/` from the design file, run `python3 build.py`.
+To change the website's design or code, edit `public/index.html` directly. Day-to-day content changes belong in the admin.
