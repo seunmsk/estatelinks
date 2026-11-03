@@ -11,12 +11,12 @@ The Estate Links website runs on Cloudflare Pages, with a built-in admin at **/#
 
 The Pages project is already connected to this repository, and every push redeploys it. Until the storage below is connected, the site runs in preview mode: everything works, but admin changes only save in the browser that made them.
 
-1. **Create the storage** (Cloudflare dashboard):
-   - **Storage & Databases → KV → Create**, and name it `estatelinks-content`.
-   - **R2 → Create bucket**, and name it `estatelinks-media`. R2 asks you to enable it once; the first 10 GB are free.
-2. **Connect the storage to the site.** Open **Workers & Pages → estatelinks → Settings → Bindings → Add** and add both of these:
-   - **KV namespace:** variable name `CONTENT`, namespace `estatelinks-content`.
-   - **R2 bucket:** variable name `MEDIA`, bucket `estatelinks-media`.
+1. **Create the content store (KV).** In the left sidebar of the Cloudflare dashboard, open **Storage & databases → Workers KV**. If you can't see it, type `KV` into the search bar at the top. Click **Create instance** (on some accounts it says **Create namespace**) and name it `estatelinks-content`.
+   - *Photo storage (R2), optional:* **Storage & databases → R2 object storage → Create bucket**, named `estatelinks-media`. R2 asks you to add a payment card once, even though the first 10 GB are free. Without it, the site still works, and uploaded photos are saved inside the content store instead.
+2. **Connect the storage to the site.** Open **Workers & Pages** and click the **estatelinks** project. Go to **Settings**, then **Bindings**, which is near the bottom of the page or in the left list on that page. Click **Add**, then:
+   - **KV namespace:** variable name `CONTENT`, namespace `estatelinks-content`, then **Save**.
+   - **R2 bucket** (if you created one): variable name `MEDIA`, bucket `estatelinks-media`, then **Save**.
+   - If the page shows a **Production / Preview** switch, add the bindings under **Production**.
 3. **Set the admin password.** Under **Settings → Variables and Secrets**, add a variable named `ADMIN_PASSWORD`, choose the **Secret** type and use a long password.
 4. **Redeploy.** Under **Deployments**, open the latest one and choose **Retry deployment**. Bindings only take effect on a new deployment.
 5. **Check it.** Open `/#admin` on the site. The sidebar should say **Live**, and the preview banner at the top should be gone.

@@ -681,6 +681,7 @@ body.admin main{margin-top:0}
 @media (max-width:640px){.hact{flex-direction:column}}
 
 @media (max-width:480px){header.top .wrap{gap:10px}.brand img{height:36px}.cur button{padding:7px 8px}.burger{padding:8px 12px}}
+footer .cols{margin-top:0;padding-top:0;border-top:0}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 </style>
@@ -708,8 +709,6 @@ body.admin main{margin-top:0}
 
 <footer>
   <div class="wrap">
-    <p class="big">Real estate, handled <em>properly</em> since 1993.</p>
-    <div style="margin-top:28px"><a class="btn btn-light arrow" href="#contact" style="display:inline-flex">Start a conversation </a></div>
     <div class="cols">
       <div><img src="logo.png" alt="Estate Links" width="640" height="213" style="height:62px;width:auto;background:#fff;padding:8px 12px;border-radius:6px"><p style="margin-top:16px;max-width:34ch">International real estate consultants and estate surveyors &amp; valuers.</p></div>
       <div><h4>Explore</h4><a href="#properties">Properties</a><a href="#services">Services</a><a href="#abroad">Invest abroad</a><a href="#projects">Projects</a><a href="#firm">The firm</a></div>
@@ -1441,6 +1440,7 @@ async function uploadImage(file){
   if(SERVER){
     const b=await shrink(file,1800,.82);
     const r=await fetch("/api/upload",{method:"POST",headers:authH({"content-type":"image/jpeg"}),body:b});
+    if(r.status===503) return blobToData(await shrink(file,1100,.72)); // photo storage (R2) not connected yet: keep the photo inside the content
     if(!r.ok) throw new Error("Upload failed. Check your connection and try again.");
     return (await r.json()).url;
   }
