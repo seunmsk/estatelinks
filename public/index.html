@@ -1201,7 +1201,6 @@ function heroStart(){
   $("#heroPills").onclick=e=>{ const b=e.target.closest("[data-hi]"); if(!b) return; heroPaused=true; clearInterval(heroTimer); $("#heroPills").classList.add("paused"); heroShow(+b.dataset.hi); };
 }
 function pHome(){
-  const rail = listings.filter(l=>l.region==="Nigeria").sort((a,b)=>(hasPh(b)?1:0)-(hasPh(a)?1:0));
   const mq = [...services.map(s=>s.name), "Lagos", "Abuja", "Surrey", "Philadelphia"];
   const flips = [["County Durham","9%","£55,000","parmeter-street-durham"],["Burnley","7%","£85,000","lubbock-street-burnley"],["Morecambe","7%","£130,000",null]];
   return `
@@ -1238,11 +1237,6 @@ function pHome(){
     <div class="journey" id="journey"></div>
   </div></section>
 
-  <section class="paper"><div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow">On the market</span><h2>Homes and buildings <em>for sale.</em></h2></div>
-      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><div class="rail-ctl"><button id="railL" aria-label="Scroll left">←</button><button id="railR" aria-label="Scroll right">→</button></div><a class="btn btn-primary arrow" href="#properties">All properties </a></div></div>
-    <div class="rail" id="rail">${rail.map(card).join("")}</div>
-  </div></section>
 
   <section class="night"><div class="wrap">
     <div class="sec-head"><div><span class="eyebrow">Invest abroad</span><h2>Earn in pounds. <em>Manage from Lagos.</em></h2>
@@ -1259,10 +1253,6 @@ function pHome(){
     <div class="rows">${projects.map((p,i)=>`<a class="row rv" href="#projects"><span class="ix">0${i+1}</span><div style="display:grid;gap:10px"><h3>${p.name}</h3><span class="muted">${esc(p.loc)}</span></div><p class="muted">${p.d}</p><span class="chip ${p.status==="Completed"?"ok":"warn"}">${p.status}</span></a>`).join("")}</div>
   </div></section>
 
-  <section class="night"><div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow">Leadership</span><h2>Lagos, London, <em>Philadelphia.</em></h2></div><a class="btn btn-ghost arrow" href="#firm" data-anchor="people">Meet all ${team.length} </a></div>
-    <div class="people">${team.slice(0,4).map((m,i)=>`<button class="person rv" data-member="${i}"><div class="ph"><img src="${m.photo}" alt="Portrait of ${m.name}" loading="lazy"></div><h3>${m.name}</h3><span class="role">${m.role}</span></button>`).join("")}</div>
-  </div></section>
   <div class="marquee awards-mq" aria-hidden="true"><div class="track">${[0,1].map(()=>awards.map(a=>`<span><em>${a.y}</em>${a.t}</span>`).join("")).join("")}</div></div>
   <section class="paper" style="padding-block:64px"><div class="wrap">
     <div class="sec-head" style="margin-bottom:28px"><div><span class="eyebrow">Registered and recognised</span></div><a class="link" href="#firm" data-anchor="affiliates">Our affiliations</a></div>
@@ -1778,7 +1768,6 @@ function bind(r){
   if(r==="home"){
     heroStart();
     renderJourney(); $("#journey").onclick=e=>{const b=e.target.closest("[data-j]"); if(b){jIdx=+b.dataset.j; renderJourney();}};
-    const rail=$("#rail"); $("#railL").onclick=()=>rail.scrollBy({left:-rail.clientWidth*.8,behavior:"smooth"}); $("#railR").onclick=()=>rail.scrollBy({left:rail.clientWidth*.8,behavior:"smooth"});
     document.querySelectorAll("[data-flip]").forEach(b=>b.onclick=()=>b.classList.toggle("on"));
   }
   if(r==="properties"){
