@@ -2,7 +2,7 @@
 
 The Estate Links website runs on Cloudflare Pages, with a built-in admin at **/#admin**.
 
-- **Website:** `index.html` at the top of the repo, plus the logo and the `img/` photos. It needs no build step.
+- **Website:** `public/` holds one page plus the logo and photos. It needs no build step.
 - **Admin:** staff edit listings, photos, the team, projects, FAQs, homepage text, contact details and exchange rates, and read enquiries.
 - **Storage:** content and enquiries are saved in Cloudflare KV, and uploaded photos in Cloudflare R2.
 - **Cost:** on Cloudflare's free tiers it is ₦0 a month for a site this size. The only yearly cost is the estatelinks.net domain itself.
@@ -24,7 +24,7 @@ The Pages project is already connected to this repository, and every push redepl
 7. **Connect the domain.** Under **Custom domains**, add `estatelinks.net` and `www.estatelinks.net`, then follow the nameserver instructions.
 8. **Bring over preview edits.** In the preview's admin, open **Backup & go live** and copy the content. Paste it into the same tab in the live admin and click **Load this content**.
 
-Pages settings: framework preset **None**, with the build command and build output directory both left empty.
+Pages settings: framework preset **None**, build command empty, build output directory `public`.
 
 ## Work on it locally
 
@@ -39,7 +39,7 @@ npm test                         # checks the API functions
 
 | Path | What it does |
 |---|---|
-| `index.html` | The whole website and admin |
+| `public/index.html` | The whole website and admin |
 | `functions/api/content.js` | `GET` returns site content; `PUT` saves it (admin only). Each save keeps a 30-day backup of the previous version in KV. |
 | `functions/api/upload.js` | `POST` stores a photo in R2 (admin only) |
 | `functions/media/[[path]].js` | Serves uploaded photos with long caching |
@@ -48,4 +48,4 @@ npm test                         # checks the API functions
 
 The page detects the API by itself. Opened anywhere else, such as in a preview, it falls back to saving in the visitor's browser and the admin password is `admin`.
 
-To change the website's design or code, edit `index.html` directly. Day-to-day content changes belong in the admin.
+To change the website's design or code, edit `public/index.html` directly. Day-to-day content changes belong in the admin.

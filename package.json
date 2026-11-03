@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler pages dev . --kv CONTENT --r2 MEDIA",
-    "deploy": "wrangler pages deploy .",
+    "dev": "wrangler pages dev public --kv CONTENT --r2 MEDIA",
+    "deploy": "wrangler pages deploy public",
     "test": "node test/functions.test.mjs"
   },
   "devDependencies": {
