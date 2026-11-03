@@ -1,8 +1,9 @@
 // POST /api/enquiry -> public endpoint for the website's forms (request, viewing, video tour).
 // Saves to the admin inbox and, if RESEND_API_KEY and NOTIFY_EMAIL are set, emails the team.
-import { json, clip } from "../../lib/util.js";
+import { json, clip, notReady } from "../../lib/util.js";
 
 export async function onRequestPost({ request, env, waitUntil }) {
+  if (!env.CONTENT) return notReady();
   let e;
   try { e = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400); }
   if (!e || (!e.name && !e.phone)) return json({ error: "Add a name or phone number" }, 400);

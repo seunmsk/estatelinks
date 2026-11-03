@@ -7,33 +7,31 @@ The Estate Links website runs on Cloudflare Pages, with a built-in admin at **/#
 - **Storage:** content and enquiries are saved in Cloudflare KV, and uploaded photos in Cloudflare R2.
 - **Cost:** on Cloudflare's free tiers it is ₦0 a month for a site this size. The only yearly cost is the estatelinks.net domain itself.
 
-## Go live (about 30 minutes)
+## Go live
 
-1. **Put the code on GitHub.** Create a private repository (for example `estatelinks-site`) and push this folder to it.
-2. **Create the storage.** Make a Cloudflare account, then run these from this folder:
-   ```
-   npm install
-   npx wrangler login
-   npx wrangler kv namespace create estatelinks-content
-   npx wrangler r2 bucket create estatelinks-media
-   ```
-   The KV command prints an `id`. Paste it into `wrangler.toml` in place of `REPLACE_WITH_KV_NAMESPACE_ID`, then commit and push. R2 asks you to enable it once in the dashboard; the first 10 GB are free.
-3. **Create the Pages project.** In the Cloudflare dashboard go to **Workers & Pages → Create → Pages → Connect to Git** and pick the repository.
-   - Build command: *(leave empty)*
-   - Build output directory: `public`
-4. **Set the admin password.** Go to the project's **Settings → Variables and Secrets** and add a **Secret** named `ADMIN_PASSWORD`. Use a long password, then redeploy.
-5. **Optional: get enquiries by email.** Add the secrets `RESEND_API_KEY` (from resend.com, which has a free tier) and `NOTIFY_EMAIL` (for example `info@estatelinks.net`). Every new enquiry is then emailed as well as saved in the admin.
-6. **Connect the domain.** Under the project's **Custom domains**, add `estatelinks.net` and `www.estatelinks.net`. Cloudflare shows the nameservers to set at the current domain registrar. You can also transfer the domain to Cloudflare Registrar, which charges cost price.
-7. **Bring over preview edits.** If you edited content in the preview, open **Admin → Backup & go live** there and copy the content. Then log in to the live admin, open the same tab, paste it in and click **Load this content**.
+The Pages project is already connected to this repository, and every push redeploys it. Until the storage below is connected, the site runs in preview mode: everything works, but admin changes only save in the browser that made them.
 
-Once you've done this, every push to GitHub redeploys the site automatically. Admin edits publish instantly and don't need a redeploy.
+1. **Create the storage** (Cloudflare dashboard):
+   - **Storage & Databases → KV → Create**, and name it `estatelinks-content`.
+   - **R2 → Create bucket**, and name it `estatelinks-media`. R2 asks you to enable it once; the first 10 GB are free.
+2. **Connect the storage to the site.** Open **Workers & Pages → estatelinks → Settings → Bindings → Add** and add both of these:
+   - **KV namespace:** variable name `CONTENT`, namespace `estatelinks-content`.
+   - **R2 bucket:** variable name `MEDIA`, bucket `estatelinks-media`.
+3. **Set the admin password.** Under **Settings → Variables and Secrets**, add a variable named `ADMIN_PASSWORD`, choose the **Secret** type and use a long password.
+4. **Redeploy.** Under **Deployments**, open the latest one and choose **Retry deployment**. Bindings only take effect on a new deployment.
+5. **Check it.** Open `/#admin` on the site. The sidebar should say **Live**, and the preview banner at the top should be gone.
+6. **Optional: get enquiries by email.** Add the secrets `RESEND_API_KEY` (from resend.com) and `NOTIFY_EMAIL`, then redeploy.
+7. **Connect the domain.** Under **Custom domains**, add `estatelinks.net` and `www.estatelinks.net`, then follow the nameserver instructions.
+8. **Bring over preview edits.** In the preview's admin, open **Backup & go live** and copy the content. Paste it into the same tab in the live admin and click **Load this content**.
+
+Pages settings: framework preset **None**, build command empty, build output directory `public`.
 
 ## Work on it locally
 
 ```
 cp .dev.vars.example .dev.vars   # set ADMIN_PASSWORD
 npm install
-npm run dev                      # http://localhost:8788  ·  admin at /#admin
+npm run dev                      # http://localhost:8788 with local KV and R2 · admin at /#admin
 npm test                         # checks the API functions
 ```
 

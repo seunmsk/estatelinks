@@ -1,13 +1,15 @@
 // GET  /api/content  -> the website's editable content (listings, team, projects, FAQs, settings)
 // PUT  /api/content  -> save content from the admin (needs the admin password)
-import { json, authed } from "../../lib/util.js";
+import { json, authed, notReady } from "../../lib/util.js";
 
 export async function onRequestGet({ env }) {
+  if (!env.CONTENT) return notReady();
   const content = await env.CONTENT.get("content", "json");
   return json(content || {});
 }
 
 export async function onRequestPut({ request, env }) {
+  if (!env.CONTENT) return notReady();
   if (!authed(request, env)) return json({ error: "Not authorised" }, 401);
   let body;
   try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400); }

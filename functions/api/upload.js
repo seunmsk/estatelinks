@@ -1,9 +1,10 @@
 // POST /api/upload -> store a photo in R2 and return its public URL (needs the admin password)
-import { json, authed } from "../../lib/util.js";
+import { json, authed, notReady } from "../../lib/util.js";
 
 const TYPES = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
 
 export async function onRequestPost({ request, env }) {
+  if (!env.MEDIA) return notReady();
   if (!authed(request, env)) return json({ error: "Not authorised" }, 401);
   const type = (request.headers.get("content-type") || "").split(";")[0].trim();
   if (!TYPES[type]) return json({ error: "Upload a JPEG, PNG or WebP image" }, 415);

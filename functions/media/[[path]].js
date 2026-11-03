@@ -1,5 +1,6 @@
 // GET /media/<key> -> serve an uploaded photo from R2 with long-lived caching
 export async function onRequestGet({ params, env }) {
+  if (!env.MEDIA) return new Response("Not found", { status: 404 });
   const key = [].concat(params.path || []).join("/");
   if (!key) return new Response("Not found", { status: 404 });
   const obj = await env.MEDIA.get(key);
