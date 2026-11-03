@@ -1,0 +1,15 @@
+# Cloudflare Pages configuration for the Estate Links website.
+# 1. Create the KV namespace:  npx wrangler kv namespace create estatelinks-content
+# 2. Paste the id it prints below, replacing REPLACE_WITH_KV_NAMESPACE_ID.
+# 3. Create the R2 bucket:     npx wrangler r2 bucket create estatelinks-media
+name = "estatelinks"
+pages_build_output_dir = "public"
+compatibility_date = "2025-09-01"
+
+[[kv_namespaces]]
+binding = "CONTENT"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "estatelinks-media"

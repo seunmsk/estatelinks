@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local testing with `npm run dev`. Never commit .dev.vars.
+ADMIN_PASSWORD=choose-a-long-password
+# Optional: email the team when an enquiry arrives (https://resend.com)
+# RESEND_API_KEY=re_xxx
+# NOTIFY_EMAIL=info@estatelinks.net
+# NOTIFY_FROM=Estate Links website <website@estatelinks.net>
