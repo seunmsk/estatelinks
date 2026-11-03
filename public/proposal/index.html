@@ -92,6 +92,21 @@ td:first-child{font-weight:600;font-family:var(--serif);width:22%}
 td:nth-child(2){color:var(--muted)}
 tr:last-child td{border-bottom:0}
 
+
+@media (max-width:760px){
+  .scroll{overflow:visible;border:0;background:none}
+  table{min-width:0}
+  thead{display:none}
+  table,tbody,tr,td{display:block;width:100%}
+  tr{background:var(--paper);border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
+  td{border-bottom:0;padding:12px 16px}
+  td.area{width:100%;background:var(--tint);font-size:1.1rem;padding:14px 16px}
+  td[data-label]{display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start}
+  td[data-label]::before{content:attr(data-label);font:500 .68rem/1.9 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  td.new-cell{border-top:1px dashed var(--line);color:var(--ink)}
+  td.new-cell::before{color:var(--green)}
+}
+
 /* cost */
 .cost{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
 @media (max-width:760px){.cost{grid-template-columns:1fr}}
@@ -190,16 +205,16 @@ tr:last-child td{border-bottom:0}
   <div class="scroll"><table>
     <thead><tr><th>Area</th><th>estatelinks.net today</th><th>New site</th></tr></thead>
     <tbody>
-      <tr><td>First impression</td><td>“Discover your dream home today”, the same as many listing sites</td><td>“Rent with us. Value with us. Manage with us.” Seven services, seven buttons</td></tr>
-      <tr><td>Links and buttons</td><td>Several point to a test address or to nothing</td><td>All lead somewhere useful</td></tr>
-      <tr><td>Valuation</td><td>No form</td><td>Guided request with property, purpose and title document</td></tr>
-      <tr><td>Rentals</td><td>None</td><td>Rental listings with the total cost to move in</td></tr>
-      <tr><td>Listings</td><td>Inconsistent details, email as agent</td><td>Gallery, specs, viewing and video-tour booking, WhatsApp</td></tr>
-      <tr><td>Investors</td><td>Static text and a table</td><td>Earnings estimate on every sale, UK buy-to-let calculator</td></tr>
-      <tr><td>Team</td><td>Text profiles</td><td>Photo cards with full bios on tap</td></tr>
-      <tr><td>Updating content</td><td>WordPress and Elementor, usually through a developer</td><td>Admin area anyone on staff can use</td></tr>
-      <tr><td>Enquiries</td><td>Scattered across phone and email</td><td>One inbox with status tracking and optional email alerts</td></tr>
-      <tr><td>Hosting</td><td>Paid plan, renewed yearly</td><td>Cloudflare free plan</td></tr>
+      <tr><td class="area">First impression</td><td data-label="Today"><span>“Discover your dream home today”, the same as many listing sites</span></td><td data-label="New site" class="new-cell"><span>“Rent with us. Value with us. Manage with us.” Seven services, seven buttons</span></td></tr>
+      <tr><td class="area">Links and buttons</td><td data-label="Today"><span>Several point to a test address or to nothing</span></td><td data-label="New site" class="new-cell"><span>All lead somewhere useful</span></td></tr>
+      <tr><td class="area">Valuation</td><td data-label="Today"><span>No form</span></td><td data-label="New site" class="new-cell"><span>Guided request with property, purpose and title document</span></td></tr>
+      <tr><td class="area">Rentals</td><td data-label="Today"><span>None</span></td><td data-label="New site" class="new-cell"><span>Rental listings with the total cost to move in</span></td></tr>
+      <tr><td class="area">Listings</td><td data-label="Today"><span>Inconsistent details, email as agent</span></td><td data-label="New site" class="new-cell"><span>Gallery, specs, viewing and video-tour booking, WhatsApp</span></td></tr>
+      <tr><td class="area">Investors</td><td data-label="Today"><span>Static text and a table</span></td><td data-label="New site" class="new-cell"><span>Earnings estimate on every sale, UK buy-to-let calculator</span></td></tr>
+      <tr><td class="area">Team</td><td data-label="Today"><span>Text profiles</span></td><td data-label="New site" class="new-cell"><span>Photo cards with full bios on tap</span></td></tr>
+      <tr><td class="area">Updating content</td><td data-label="Today"><span>WordPress and Elementor, usually through a developer</span></td><td data-label="New site" class="new-cell"><span>Admin area anyone on staff can use</span></td></tr>
+      <tr><td class="area">Enquiries</td><td data-label="Today"><span>Scattered across phone and email</span></td><td data-label="New site" class="new-cell"><span>One inbox with status tracking and optional email alerts</span></td></tr>
+      <tr><td class="area">Hosting</td><td data-label="Today"><span>Paid plan, renewed yearly</span></td><td data-label="New site" class="new-cell"><span>Cloudflare free plan</span></td></tr>
     </tbody></table></div>
 </div></section>
 
